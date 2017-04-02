@@ -7,10 +7,10 @@
       <el-option label="科鲁兹" value="beijing"></el-option>
     </el-select>
   <el-form-item>
-    <el-input v-model="formInline.user" placeholder="请输入关键字"></el-input>
+    <el-input v-model="formInline.user" @click="onSubmit" placeholder="请输入关键字"></el-input>
   </el-form-item>
   </el-form-item><el-form-item>
-    <el-button type="primary" @click="onSubmit">确认搜索</el-button>
+    <el-button type="primary" @keydown.enter="ensure">确认搜索</el-button>
   </el-form-item>
 </el-form>
 
@@ -30,7 +30,12 @@
     methods: {
       onSubmit() {
         console.log('submit!');
+      },
+      // 确认收缩的按钮
+      ensure(){
+
       }
+
     }
   }
 </script>

@@ -11,9 +11,11 @@
   "dependencies": {
     "element-ui": "^1.2.2",
     "vue": "^2.1.10",
+    "vue-i18n": "^5.0.3",
     "vue-resource": "^1.2.1",
     "vue-router": "^2.2.0",
-    "vue-simplemde": "^0.3.2"
+    "vue-simplemde": "^0.3.2",
+    "vuex": "^2.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
@@ -28,6 +30,7 @@
     "css-loader": "^0.26.1",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.14.1",
+    "eventsource-polyfill": "^0.9.6",
     "extract-text-webpack-plugin": "^2.0.0-rc.2",
     "file-loader": "^0.10.0",
     "friendly-errors-webpack-plugin": "^1.1.3",

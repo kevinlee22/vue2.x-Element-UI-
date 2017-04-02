@@ -2,29 +2,45 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-menu"></i>当前位置</el-breadcrumb-item>
-                <el-breadcrumb-item id="currentPos">{{currentPosition}}</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-menu"></i>{{other[3]}}</el-breadcrumb-item>
+                <el-breadcrumb-item id="currentPos">{{other[4]}}</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-            <search></search>
+            <!-- <search></search> -->
+            <div class="search">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item>
+    <el-select v-model="formInline.region" :placeholder="other[0]">
+      <el-option label="帕萨特" value="shanghai"></el-option>
+      <el-option label="科鲁兹" value="beijing"></el-option>
+    </el-select>
+  <el-form-item>
+    <el-input v-model="formInline.search" @keydown.enter="ensure" :placeholder="other[2]"></el-input>
+  </el-form-item>
+  </el-form-item><el-form-item>
+    <el-button type="primary" @click="onSubmit">{{other[1]}}</el-button>
+  </el-form-item>
+</el-form>
+    </div>
         <el-table :data="tableData" border style="width: 100%">
-            <el-table-column prop="id" label="订单编号" width="150">
+            <el-table-column prop="id" :label="tableNav[0]" width="150">
             </el-table-column>
-            <el-table-column prop="time" label="下单时间" width="150">
+            <el-table-column prop="time" :label="tableNav[1]" width="150">
             </el-table-column>
-            <el-table-column prop="startTime" label="开始使用时间" width="160">
+            <el-table-column prop="startTime" :label="tableNav[2]" width="160">
             </el-table-column>
-            <el-table-column prop="endTime" label="结束使用时间" width="160">
+            <el-table-column prop="endTime" :label="tableNav[3]" width="160">
             </el-table-column>
-            <el-table-column prop="carType" label="车型" width="110">
-            </el-table-column>
-
-            <el-table-column prop="carCount" label="用车数量" width="130">
-            </el-table-column>
-            <el-table-column prop="travel" label="行程" width="150">
+            <el-table-column :filters="[{ text: '紧凑车', value: '紧凑车' }, { text: 'SUV', value: 'SUV' }]"
+      :filter-method="filterTag" prop="carType" :label="tableNav[4]" width="160">
             </el-table-column>
             
-            <el-table-column label="操作" width="180">
+            <el-table-column prop="carCount" :label="tableNav[5]" width="130">
+            </el-table-column>
+            <el-table-column prop="travel" :label="tableNav[6]" width="150">
+            </el-table-column>
+            
+            <el-table-column :label="tableNav[7]" width="180">
                 <template scope="scope">
                     <el-button size="small"
                             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -41,7 +57,7 @@
         </div>
     </div>
 </template>
-
+    
 <script>
     import search from '../items/form.vue';
     export default {
@@ -53,6 +69,10 @@
         data() {
             return {
                 currentPosition:'',
+                formInline: {
+          search: '',
+          region: ''
+        },
                 tableData: [{
                     time: '2017-02-02',
                     id: 1,
@@ -111,18 +131,36 @@
                     }
             }
         },
+        computed:{
+            tableNav(){
+                return this.$t("tableNav")
+            },
+            other(){
+                return this.$t("other")
+            }
+        },
         methods: {
             formatter(row, column) {
                 return row.address;
             },
             filterTag(value, row) {
-                return row.tag === value;
+                return row.carType == value;
             },
             handleEdit(index, row) {
                 this.$message('编辑第'+(index+1)+'行');
             },
             handleDelete(index, row) {
                 this.$message.error('删除第'+(index+1)+'行');
+                console.log(row)
+                this.tableData.splice(index, 1);
+            },
+
+            onSubmit(){
+
+            },
+
+            ensure(){
+
             }
         }
     }
